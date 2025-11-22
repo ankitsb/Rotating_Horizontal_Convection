@@ -30,7 +30,7 @@ grid = RectilinearGrid(GPU(), size = (Nx, Ny, Nz),
 
 @inline bˢ(x, y, t, p) = p.T_dev * sin(π * (y + p.Ly/2)) + p.T_mean + p.purtur
 
-const purtur = -1.0
+const purtur = 0.0
 const T_mean = 20.0
 const T_dev = 10.0
 b_bcs = FieldBoundaryConditions(top = ValueBoundaryCondition(bˢ, parameters=(; Ly, T_mean, T_dev, purtur)),
@@ -131,7 +131,7 @@ u, v, w = model.velocities
 T = model.tracers.T
 S = model.tracers.S
 
-direc = "/data/gpfs/projects/punim1661/hori_conv/purturbation_exp/T_m_1/"
+direc = "./"
 filename = "Hori_Conv_v01"
 outputs = (; u, v, w, T)
 
@@ -284,6 +284,6 @@ simulation.output_writers[:checkpointer] = Checkpointer(model,
 
 @info "Output files gererated!!!!!!!!!!"
 
-run!(simulation, pickup=true)
+run!(simulation, pickup=false)
 
 # include("code.jl")
